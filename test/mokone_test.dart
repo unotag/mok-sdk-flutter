@@ -23,6 +23,12 @@ class MockMokonePlatform
   Future<String?> requestLogEvent(String userId, String eventName, Map<String, dynamic>? params) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool?> requestNotificationPermission() {
+    // TODO: implement requestNotificationPermission
+    throw UnimplementedError();
+  }
 }
 
 void main() {
