@@ -18,6 +18,9 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        flatDir{
+            dirs 'libs'
+        }
     }
 }
 
@@ -46,9 +49,11 @@ android {
     }
 
     dependencies {
+        //api files('libs/mokone.aar')
+
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
-        api 'com.unotags:mok-sdk-android:0.0.4'
+        api 'com.unotags:mok-sdk-android:0.0.13'
     }
 
     testOptions {
