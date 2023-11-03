@@ -4,7 +4,7 @@ import com.unotag.mokone.MokSDK
 import com.unotag.mokone.utils.MokLogger
 import io.flutter.app.FlutterApplication
 
-class MokoneApplication : FlutterApplication() {
+open class MokoneApplication : FlutterApplication() {
 
     override fun onCreate() {
         super.onCreate()

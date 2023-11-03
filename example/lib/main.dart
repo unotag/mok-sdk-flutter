@@ -43,8 +43,10 @@ class _MyAppState extends State<MyApp> {
       var params = {"name": "sohel", "fcm": "token"};
       platformVersion =
           await _mokonePlugin.requestFcmToken() ?? 'Unknown platform version';
-      isNotificationPermissionGranted =
-          await _mokonePlugin.requestNotificationPermission() ?? false;
+
+      //todo
+      // isNotificationPermissionGranted =
+      //     await _mokonePlugin.requestNotificationPermission() ?? false;
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
       isNotificationPermissionGranted = false;
@@ -57,7 +59,8 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _platformVersion = platformVersion;
-      _isNotificationPermissionGranted = isNotificationPermissionGranted;
+      _isNotificationPermissionGranted = false;
+      // _isNotificationPermissionGranted = false??isNotificationPermissionGranted;
     });
   }
 
@@ -99,7 +102,13 @@ class _MyAppState extends State<MyApp> {
           ),
           MaterialButton(
             minWidth: double.maxFinite,
-            onPressed: () {},
+            onPressed: () async {
+              await _mokonePlugin.requestUpdateUser(userId: _userIdController.text,userData: {
+                'name':'karan'
+              });
+              await _mokonePlugin.requestIAMFromServerAndShow();
+
+            },
             color: Colors.deepPurple,
             child: const Text(
               "UPDATE USER ID",

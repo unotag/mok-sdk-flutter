@@ -29,6 +29,38 @@ class MockMokonePlatform
     // TODO: implement requestNotificationPermission
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool?> requestLogoutUser() {
+    // TODO: implement requestLogoutUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<String?> requestUserId() {
+    // TODO: implement requestUserId
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> isNotificationPermissionGranted() {
+    // TODO: implement isNotificationPermissionGranted
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> openNotificationSettings() {
+    // TODO: implement openNotificationSettings
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> requestIAMFromServerAndShow() {
+    // TODO: implement requestIAMFromServerAndShow
+    throw UnimplementedError();
+  }
+
+
 }
 
 void main() {

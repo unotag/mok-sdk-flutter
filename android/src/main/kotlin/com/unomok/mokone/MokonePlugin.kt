@@ -55,9 +55,12 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getFcmToken" -> requestFcmToken(result)
             "updateUser" -> requestUpdateUser(call, result)
             "logEvent" -> requestLogEvent(call, result)
-            "requestNotificationPermission" -> requestNotificationPermission()
+            "getNotificationPermission" -> requestNotificationPermission()
             "openNotificationSettings" -> openNotificationSettings()
-            "isNotificationPermissionGranted" -> isNotificationPermissionGranted()
+            "isNotificationPermissionGranted" -> isNotificationPermissionGranted(result)
+            "getUserId" -> requestUserId(result)
+            "logoutUser" -> requestLogoutUser()
+            "getIAMFromServerAndShow" -> requestIAMFromServerAndShow()
             else -> result.notImplemented()
         }
     }
@@ -66,12 +69,16 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         mMokSDK.getFCMToken { token, error ->
             if (token != null) {
                 result.success(token)
-            }else{
-                if (error.isNullOrBlank()){
+            } else {
+                if (error.isNullOrBlank()) {
                     MokLogger.log(MokLogger.LogLevel.ERROR, "Unable to get fcm token")
-                }else{
-                    MokLogger.log(MokLogger.LogLevel.ERROR, "Unable to get fcm token, error: $error")
+                } else {
+                    MokLogger.log(
+                        MokLogger.LogLevel.ERROR,
+                        "Unable to get fcm token, error: $error"
+                    )
                 }
+                result.error("0", error?:"Unable to fetch token", error)
             }
         }
     }
@@ -80,12 +87,13 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         mMokSDK.requestNotificationPermission(mActivity)
     }
 
-    private fun openNotificationSettings(){
+    private fun openNotificationSettings() {
         mMokSDK.openNotificationSettings(mActivity)
     }
 
-    private fun isNotificationPermissionGranted(){
-        mMokSDK.isNotificationPermissionGranted(mActivity)
+    private fun isNotificationPermissionGranted(result: Result) {
+       val value:Boolean = mMokSDK.isNotificationPermissionGranted(mActivity)
+        result.success(value)
     }
 
     private fun requestUpdateUser(call: MethodCall, result: Result) {
@@ -108,6 +116,15 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
+    private fun requestUserId(result: Result){
+        val value:String = mMokSDK.getUserId()
+        result.success(value)
+    }
+
+    private fun requestLogoutUser() {
+        mMokSDK.logoutUser()
+    }
+
     private fun requestLogEvent(call: MethodCall, result: Result) {
         val userId = call.argument<String>("userId")
         val eventName = call.argument<String>("eventName")
@@ -119,7 +136,7 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
         if (userId != null && eventName != null) {
-            mMokSDK.logActivity(eventName, userId, paramsJsonObject) { success, error ->
+            mMokSDK.logEvent(eventName, userId, paramsJsonObject) { success, error ->
                 if (success != null) {
                     result.success(success.toString())
                 } else {
@@ -128,7 +145,9 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
     }
-
+    private fun requestIAMFromServerAndShow(){
+        mMokSDK.requestIAMFromServerAndShow();
+    }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
