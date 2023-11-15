@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'mokone_method_channel.dart';
@@ -21,6 +23,15 @@ abstract class MokonePlatform extends PlatformInterface {
   static set instance(MokonePlatform instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
+  }
+
+  Future<void> initMokSdk(bool isProdEnv, int duration) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+
+  Future<void> enableProductionEnvironment(bool isProdEnv) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
   //region user

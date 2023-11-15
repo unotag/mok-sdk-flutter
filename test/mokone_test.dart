@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mokone/mokone.dart';
 import 'package:mokone/mokone_platform_interface.dart';
@@ -57,6 +59,18 @@ class MockMokonePlatform
   @override
   Future<void> requestIAMFromServerAndShow() {
     // TODO: implement requestIAMFromServerAndShow
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> enableProductionEnvironment(bool isProdEnv) {
+    // TODO: implement enableProductionEnvironment
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> initMokSdk(bool isProdEnv, int duration) {
+    // TODO: implement initMokSdk
     throw UnimplementedError();
   }
 

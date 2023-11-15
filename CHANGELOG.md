@@ -1,3 +1,39 @@
+## 0.0.16
+
+* fix: full screen webview backpress
+
+## 0.0.15
+
+* update: webview progressbar
+
+## 0.0.14
+
+* fix: log event calls
+
+## 0.0.13
+
+* fix: bugs
+
+## 0.0.12
+
+* update: dynamic env switching
+
+## 0.0.11
+
+* Fix: firebase config data reader
+
+## 0.0.10
+
+* Android sdk updated to v21
+
+## 0.0.9
+
+* Android sdk updated to v20
+
+## 0.0.8
+
+* feat: In app message added
+
 ## 0.0.7
 
 * feat: Moklogger updated

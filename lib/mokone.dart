@@ -1,6 +1,18 @@
+import 'dart:ffi';
+
 import 'mokone_platform_interface.dart';
 
 class Mokone {
+
+  Future<void> initMokSdk(bool isProdEnv, int duration) async {
+    return await MokonePlatform.instance.initMokSdk(isProdEnv, duration);
+  }
+
+ Future<void> enableProductionEnvironment(bool isProdEnv) async {
+    return await MokonePlatform.instance.enableProductionEnvironment(isProdEnv);
+  }
+
+
   Future<String?> requestUpdateUser(
       {required String userId, Map<String, dynamic>? userData}) async {
     return await MokonePlatform.instance.requestUpdateUser(userId, userData);

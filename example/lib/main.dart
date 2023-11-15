@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -28,7 +30,14 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    initPlatformState();
+    //initPlatformState();
+    initMokSdk();
+
+    _userIdController.text = "MOFSDK_002";
+  }
+
+  initMokSdk() async {
+    await _mokonePlugin.initMokSdk(false, 6000);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -41,8 +50,7 @@ class _MyAppState extends State<MyApp> {
       var userID = "abc123";
       var eventName = "testEvent";
       var params = {"name": "sohel", "fcm": "token"};
-      platformVersion =
-          await _mokonePlugin.requestFcmToken() ?? 'Unknown platform version';
+      platformVersion = await _mokonePlugin.requestFcmToken() ?? 'Unknown platform version';
 
       //todo
       // isNotificationPermissionGranted =
@@ -77,8 +85,7 @@ class _MyAppState extends State<MyApp> {
               _updateUserId(),
               _logEvent(),
               _fcmToken(""),
-              _notificationPermissionStatus(
-                  _isNotificationPermissionGranted ? "Granted" : "Denied"),
+              _notificationPermissionStatus(_isNotificationPermissionGranted ? "Granted" : "Denied"),
               _inAppMsg(10),
             ],
           ),
@@ -103,11 +110,8 @@ class _MyAppState extends State<MyApp> {
           MaterialButton(
             minWidth: double.maxFinite,
             onPressed: () async {
-              await _mokonePlugin.requestUpdateUser(userId: _userIdController.text,userData: {
-                'name':'karan'
-              });
+              await _mokonePlugin.requestUpdateUser(userId: _userIdController.text, userData: {'name': 'karan'});
               await _mokonePlugin.requestIAMFromServerAndShow();
-
             },
             color: Colors.deepPurple,
             child: const Text(
@@ -137,8 +141,7 @@ class _MyAppState extends State<MyApp> {
             controller: _enterParamsController,
             decoration: const InputDecoration(
                 label: Text("Enter Params"),
-                helperText:
-                    "Add key value pair with comma separator\nEg - {'points':'100','pageName':'dashboard'} "),
+                helperText: "Add key value pair with comma separator\nEg - {'points':'100','pageName':'dashboard'} "),
           ),
           const SizedBox(
             height: 16,

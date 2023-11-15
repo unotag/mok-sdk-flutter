@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -10,14 +12,24 @@ class MethodChannelMokone extends MokonePlatform {
   final methodChannel = const MethodChannel('mokone');
 
   @override
-  Future<String?> requestUpdateUser(
-      String userId, Map<String, dynamic>? userData) async {
+  Future<void> initMokSdk(bool isProdEnv, int duration) async {
+    var arguments = {'isProdEnv': isProdEnv, 'duration' : duration};
+    await methodChannel.invokeMethod<String>('initMokSdk',arguments);
+  }
+
+  @override
+  Future<void> enableProductionEnvironment(bool isProdEnv) async {
+    var arguments = {'isProdEnv': isProdEnv};
+    await methodChannel.invokeMethod<String>('enableProductionEnvironment', arguments);
+  }
+
+  @override
+  Future<String?> requestUpdateUser(String userId, Map<String, dynamic>? userData) async {
     var arguments = {
       'userId': userId,
       'userData': userData,
     };
-    final result =
-        await methodChannel.invokeMethod<String>('updateUser', arguments);
+    final result = await methodChannel.invokeMethod<String>('updateUser', arguments);
     return result;
   }
 
@@ -50,8 +62,7 @@ class MethodChannelMokone extends MokonePlatform {
 
   @override
   Future<bool?> isNotificationPermissionGranted() async {
-    final result = await methodChannel
-        .invokeMethod<bool>('isNotificationPermissionGranted');
+    final result = await methodChannel.invokeMethod<bool>('isNotificationPermissionGranted');
     return result;
   }
 
@@ -61,15 +72,9 @@ class MethodChannelMokone extends MokonePlatform {
   }
 
   @override
-  Future<String?> requestLogEvent(
-      String userId, String eventName, Map<String, dynamic>? params) async {
-    var arguments = {
-      'userId': userId,
-      'eventName': eventName,
-      'params': params
-    };
-    final result =
-        await methodChannel.invokeMethod<String>('logEvent', arguments);
+  Future<String?> requestLogEvent(String userId, String eventName, Map<String, dynamic>? params) async {
+    var arguments = {'userId': userId, 'eventName': eventName, 'params': params};
+    final result = await methodChannel.invokeMethod<String>('logEvent', arguments);
     return result;
   }
 }
