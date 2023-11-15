@@ -1,3 +1,11 @@
+## 0.0.18
+
+* feat: ActivityLifecycleCallbacks added
+
+## 0.0.17
+
+* update: Call AIM after duration
+
 ## 0.0.16
 
 * fix: full screen webview backpress

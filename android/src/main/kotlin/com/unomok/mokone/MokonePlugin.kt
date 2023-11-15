@@ -52,6 +52,8 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
 
         when (call.method) {
+            "initMokSdk" -> initMokSdk(call)
+            "enableProductionEnvironment" -> enableProductionEnvironment(call)
             "getFcmToken" -> requestFcmToken(result)
             "updateUser" -> requestUpdateUser(call, result)
             "logEvent" -> requestLogEvent(call, result)
@@ -64,6 +66,19 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             else -> result.notImplemented()
         }
     }
+
+    private fun initMokSdk(call: MethodCall){
+        val value = call.argument<Boolean>("isProdEnv") ?: false
+        val duration = call.argument<Int>("duration") ?: 5000
+        mMokSDK.initMokSDK(value, duration.toLong())
+        MokLogger.setLogLevel(MokLogger.LogLevel.DEBUG)
+    }
+
+    private fun enableProductionEnvironment(call: MethodCall){
+       // val value = call.argument<Boolean>("isProdEnv") ?: false
+      //  mMokSDK.enableProductionEnvironment(value)
+    }
+
 
     private fun requestFcmToken(result: Result) {
         mMokSDK.getFCMToken { token, error ->
@@ -136,7 +151,7 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
         if (userId != null && eventName != null) {
-            mMokSDK.logEvent(eventName, userId, paramsJsonObject) { success, error ->
+            mMokSDK.logEvent( userId,eventName, paramsJsonObject) { success, error ->
                 if (success != null) {
                     result.success(success.toString())
                 } else {
