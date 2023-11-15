@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'mokone_method_channel.dart';
@@ -23,20 +25,57 @@ abstract class MokonePlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<void> initMokSdk(bool isProdEnv, int duration) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 
+
+  Future<void> enableProductionEnvironment(bool isProdEnv) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  //region user
+  Future<String?> requestUpdateUser(
+      String userId, Map<String, dynamic>? userData) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<String?> requestUserId() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  Future<void> requestLogoutUser() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  //endregion
+
+  //region notification
   Future<String?> requestFcmToken() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<String?> requestUpdateUser(String userId, Map<String, dynamic>? userData) {
+  Future<void> requestNotificationPermission() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<String?> requestLogEvent(String userId, String eventName,  Map<String, dynamic>? params) {
+  Future<void> openNotificationSettings() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<bool?> requestNotificationPermission() {
+  Future<bool?> isNotificationPermissionGranted() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  //endregion
+
+  Future<void> requestIAMFromServerAndShow() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  //log event
+  Future<String?> requestLogEvent(
+      String userId, String eventName, Map<String, dynamic>? params) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }

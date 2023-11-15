@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -9,11 +11,16 @@ class MethodChannelMokone extends MokonePlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('mokone');
 
+  @override
+  Future<void> initMokSdk(bool isProdEnv, int duration) async {
+    var arguments = {'isProdEnv': isProdEnv, 'duration' : duration};
+    await methodChannel.invokeMethod<String>('initMokSdk',arguments);
+  }
 
   @override
-  Future<String?> requestFcmToken() async {
-    final fcmToken = await methodChannel.invokeMethod<String>('getFcmToken');
-    return fcmToken;
+  Future<void> enableProductionEnvironment(bool isProdEnv) async {
+    var arguments = {'isProdEnv': isProdEnv};
+    await methodChannel.invokeMethod<String>('enableProductionEnvironment', arguments);
   }
 
   @override
@@ -27,17 +34,47 @@ class MethodChannelMokone extends MokonePlatform {
   }
 
   @override
-  Future<String?> requestLogEvent(String userId, String eventName, Map<String, dynamic>? params) async {
-    var arguments = {'userId': userId,
-      'eventName': eventName,
-      'params': params};
-    final result = await methodChannel.invokeMethod<String>('logEvent', arguments);
+  Future<String?> requestUserId() async {
+    final result = await methodChannel.invokeMethod<String>('getUserId');
     return result;
   }
 
   @override
-  Future<bool?> requestNotificationPermission() async{
-    final result = await methodChannel.invokeMethod<bool>('notificationPermission');
+  Future<void> requestLogoutUser() async {
+    await methodChannel.invokeMethod<void>('logoutUser');
+  }
+
+  @override
+  Future<String?> requestFcmToken() async {
+    final fcmToken = await methodChannel.invokeMethod<String>('getFcmToken');
+    return fcmToken;
+  }
+
+  @override
+  Future<void> requestNotificationPermission() async {
+    await methodChannel.invokeMethod<void>('getNotificationPermission');
+  }
+
+  @override
+  Future<void> openNotificationSettings() async {
+    await methodChannel.invokeMethod<void>('openNotificationSettings');
+  }
+
+  @override
+  Future<bool?> isNotificationPermissionGranted() async {
+    final result = await methodChannel.invokeMethod<bool>('isNotificationPermissionGranted');
+    return result;
+  }
+
+  @override
+  Future<void> requestIAMFromServerAndShow() async {
+    await methodChannel.invokeMethod<void>('getIAMFromServerAndShow');
+  }
+
+  @override
+  Future<String?> requestLogEvent(String userId, String eventName, Map<String, dynamic>? params) async {
+    var arguments = {'userId': userId, 'eventName': eventName, 'params': params};
+    final result = await methodChannel.invokeMethod<String>('logEvent', arguments);
     return result;
   }
 }
