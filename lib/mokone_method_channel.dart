@@ -12,8 +12,8 @@ class MethodChannelMokone extends MokonePlatform {
   final methodChannel = const MethodChannel('mokone');
 
   @override
-  Future<void> initMokSdk(bool isProdEnv, int duration) async {
-    var arguments = {'isProdEnv': isProdEnv, 'duration' : duration};
+  Future<void> initMokSdk(bool isProdEnv, int duration, int maxDisplayedIAMs) async {
+    var arguments = {'isProdEnv': isProdEnv, 'duration' : duration, 'maxDisplayedIAMs' : maxDisplayedIAMs};
     await methodChannel.invokeMethod<String>('initMokSdk',arguments);
   }
 

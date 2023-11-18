@@ -69,7 +69,7 @@ class MockMokonePlatform
   }
 
   @override
-  Future<void> initMokSdk(bool isProdEnv, int duration) {
+  Future<void> initMokSdk(bool isProdEnv, int duration, int maxDisplayedIAMs) {
     // TODO: implement initMokSdk
     throw UnimplementedError();
   }

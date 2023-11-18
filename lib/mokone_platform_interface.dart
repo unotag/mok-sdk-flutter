@@ -25,7 +25,7 @@ abstract class MokonePlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> initMokSdk(bool isProdEnv, int duration) {
+  Future<void> initMokSdk(bool isProdEnv, int duration, int maxDisplayedIAMs) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
