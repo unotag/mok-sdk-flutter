@@ -53,4 +53,8 @@ class Mokone {
     return await MokonePlatform.instance
         .requestLogEvent(userId, eventName, params);
   }
+
+  Future<String?> getCarouselData() async {
+    return await MokonePlatform.instance.requestCarouselData();
+  }
 }

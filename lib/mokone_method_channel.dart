@@ -77,4 +77,10 @@ class MethodChannelMokone extends MokonePlatform {
     final result = await methodChannel.invokeMethod<String>('logEvent', arguments);
     return result;
   }
+
+  @override
+  Future<String?> requestCarouselData() async {
+    final result = await methodChannel.invokeMethod<String>('getCarouselData');
+    return result;
+  }
 }

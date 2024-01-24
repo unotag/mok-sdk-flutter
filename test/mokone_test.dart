@@ -74,6 +74,12 @@ class MockMokonePlatform
     throw UnimplementedError();
   }
 
+  @override
+  Future<String?> requestCarouselData() {
+    // TODO: implement requestCarouselData
+    throw UnimplementedError();
+  }
+
 
 }
 
