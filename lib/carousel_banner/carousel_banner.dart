@@ -1,12 +1,10 @@
-import 'dart:io';
+import 'dart:convert';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 import 'package:mokone/carousel_banner/carousel_banner_data.dart';
 import 'package:mokone/mokone.dart';
 import 'package:shimmer/shimmer.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class MokCarouselBanner extends StatefulWidget {
   const MokCarouselBanner({super.key});
@@ -25,42 +23,39 @@ class _MokCarouselBannerState extends State<MokCarouselBanner> {
       builder: (BuildContext context, AsyncSnapshot<CarouselData?> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
-            return Text('Press button to start.');
+            debugPrint("::::::ConnectionState.none");
+            return Container();
           case ConnectionState.active:
           case ConnectionState.waiting:
-            return Text('Awaiting result...');
+            debugPrint("::::::Awaiting result...");
+            return Container();
           case ConnectionState.done:
-            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
-            return Text('Result: ${snapshot.data?.data?[0].carouselContent?[0].url}');
+            if (snapshot.hasError) return Container();
+            return CarouselSlider(
+              options: CarouselOptions(height: 250.0, viewportFraction: 1),
+              items: snapshot.data?.data?.map((data) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Image.network(
+                      data.carouselContent?[0].url ??
+                          "https://images.unsplash.com/photo-1700427296131-0cc4c4610fc6?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(context).size.width,
+                    );
+                  },
+                );
+              }).toList(),
+            );
         }
       },
     );
   }
 }
 
-//
 //     return Column(
 //       mainAxisAlignment: MainAxisAlignment.start,
 //       crossAxisAlignment: CrossAxisAlignment.start,
 //       children: [
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //         StreamBuilder<DocumentSnapshot<Map<String, dynamic>?>>(
 //           stream: FirebaseFirestore.instance.collection('config').doc('home_bottom_banner').snapshots(),
 //           builder: (context, snapshot) {
@@ -149,11 +144,14 @@ class BannerShimmer extends StatelessWidget {
 }
 
 Future<CarouselData?> fetchData() async {
-  final mokonePlugin = Mokone();
-  var result = await mokonePlugin.getCarouselData();
-  if (result != null && result != "null") {
-    return CarouselData.fromJson(json.decode(result));
+  try {
+    final mokonePlugin = Mokone();
+    var result = await mokonePlugin.getCarouselData();
+    if (result != null && result != "null") {
+      return CarouselData.fromJson(json.decode(result));
+    }
+    return null;
+  } catch (error) {
+    rethrow;
   }
-  return null;
 }
-
