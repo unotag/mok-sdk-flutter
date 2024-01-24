@@ -85,8 +85,9 @@ class MethodChannelMokone extends MokonePlatform {
   }
 
     @override
-  Future<void> handleBannerClick(Map<String, dynamic>? params)  async {
-     await methodChannel.invokeMethod<void>('handleBannerClick');
+  Future<void> handleBannerClick(String url)  async {
+      var arguments = {'url': url,};
+      await methodChannel.invokeMethod<void>('handleBannerClick', arguments);
   }
 
 }

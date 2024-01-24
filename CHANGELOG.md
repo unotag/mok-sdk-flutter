@@ -1,5 +1,9 @@
 ## 0.0.19
 
+* feat: carousel banner
+
+## 0.0.19
+
 * Android : dependencies updated, v30
 
 ## 0.0.18

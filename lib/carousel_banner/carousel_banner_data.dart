@@ -68,22 +68,26 @@ class CarouselContent {
   int? id;
   String? type;
   String? url;
+  String? cta;
 
   CarouselContent({
     this.id,
     this.type,
     this.url,
+    this.cta,
   });
 
   factory CarouselContent.fromJson(Map<String, dynamic> json) => CarouselContent(
     id: json["id"],
     type: json["type"],
     url: json["url"],
+    cta: json["cta"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "type": type,
     "url": url,
+    "cta": cta,
   };
 }

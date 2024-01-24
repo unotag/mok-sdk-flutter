@@ -14,7 +14,6 @@ class MokCarouselBanner extends StatefulWidget {
 }
 
 class _MokCarouselBannerState extends State<MokCarouselBanner> {
-  var _bannerData;
   final mokonePlugin = Mokone();
 
   @override
@@ -40,7 +39,9 @@ class _MokCarouselBannerState extends State<MokCarouselBanner> {
                     builder: (BuildContext context) {
                       return InkWell(
                           onTap: () async {
-                            await mokonePlugin.handleBannerClick({});
+                            if (data.carouselContent?[0].cta !=null) {
+                            await mokonePlugin.handleBannerClick(data.carouselContent?[0].cta ?? "");
+                            }
                           },
                           child: CachedNetworkImage(
                             width: MediaQuery.of(context).size.width,

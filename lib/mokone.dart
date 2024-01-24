@@ -58,7 +58,7 @@ class Mokone {
     return await MokonePlatform.instance.requestCarouselData();
   }
 
-  Future<void> handleBannerClick( Map<String, dynamic>? params) async {
-    return await MokonePlatform.instance.handleBannerClick(params);
+  Future<void> handleBannerClick(String url) async {
+    return await MokonePlatform.instance.handleBannerClick(url);
   }
 }
