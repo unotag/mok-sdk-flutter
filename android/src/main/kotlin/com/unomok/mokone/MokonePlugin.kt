@@ -24,13 +24,12 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private lateinit var mContext: Context
     private lateinit var mActivity: Activity
-    private lateinit var mMokSDK: MokSDK
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "mokone")
         channel.setMethodCallHandler(this)
         mContext = flutterPluginBinding.applicationContext
-        mMokSDK = MokSDK.getInstance(mContext)
+        MokSDK.getInstance(mContext)
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
@@ -63,6 +62,8 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getUserId" -> requestUserId(result)
             "logoutUser" -> requestLogoutUser()
             "getIAMFromServerAndShow" -> requestIAMFromServerAndShow()
+            "getCarouselData" -> requestCarouselData(result)
+
             else -> result.notImplemented()
         }
     }
@@ -70,18 +71,19 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun initMokSdk(call: MethodCall){
         val value = call.argument<Boolean>("isProdEnv") ?: false
         val duration = call.argument<Int>("duration") ?: 5000
-        mMokSDK.initMokSDK(value, duration.toLong())
+        val maxDisplayedIAMs = call.argument<Int>("maxDisplayedIAMs") ?: 5
+        MokSDK.initMokSDK(value, duration.toLong(), maxDisplayedIAMs = maxDisplayedIAMs)
         MokLogger.setLogLevel(MokLogger.LogLevel.DEBUG)
     }
 
     private fun enableProductionEnvironment(call: MethodCall){
        // val value = call.argument<Boolean>("isProdEnv") ?: false
-      //  mMokSDK.enableProductionEnvironment(value)
+      //  MokSDK.enableProductionEnvironment(value)
     }
 
 
     private fun requestFcmToken(result: Result) {
-        mMokSDK.getFCMToken { token, error ->
+        MokSDK.requestFCMToken() { token, error ->
             if (token != null) {
                 result.success(token)
             } else {
@@ -99,15 +101,15 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun requestNotificationPermission() {
-        mMokSDK.requestNotificationPermission(mActivity)
+        MokSDK.requestNotificationPermission(mActivity)
     }
 
     private fun openNotificationSettings() {
-        mMokSDK.openNotificationSettings(mActivity)
+        MokSDK.openNotificationSettings(mActivity)
     }
 
     private fun isNotificationPermissionGranted(result: Result) {
-       val value:Boolean = mMokSDK.isNotificationPermissionGranted(mActivity)
+       val value:Boolean = MokSDK.isNotificationPermissionGranted(mActivity)
         result.success(value)
     }
 
@@ -121,7 +123,7 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
         if (userId != null) {
-            mMokSDK.updateUser(userId, userDataJsonObject) { success, error ->
+            MokSDK.updateUser(userId, userDataJsonObject) { success, error ->
                 if (success != null) {
                     result.success(success.toString())
                 } else {
@@ -132,12 +134,12 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun requestUserId(result: Result){
-        val value:String = mMokSDK.getUserId()
+        val value:String = MokSDK.getUserId()
         result.success(value)
     }
 
     private fun requestLogoutUser() {
-        mMokSDK.logoutUser()
+        MokSDK.logoutUser()
     }
 
     private fun requestLogEvent(call: MethodCall, result: Result) {
@@ -151,7 +153,7 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             }
         }
         if (userId != null && eventName != null) {
-            mMokSDK.logEvent( userId,eventName, paramsJsonObject) { success, error ->
+            MokSDK.logEvent( userId,eventName, paramsJsonObject) { success, error ->
                 if (success != null) {
                     result.success(success.toString())
                 } else {
@@ -161,8 +163,15 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
     private fun requestIAMFromServerAndShow(){
-        mMokSDK.requestIAMFromServerAndShow();
+        MokSDK.requestIAMFromServerAndShow();
     }
+
+    private fun requestCarouselData( result: Result){
+        MokSDK.requestCarouselContent {
+            result.success(it.toString())
+        }
+    }
+
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
