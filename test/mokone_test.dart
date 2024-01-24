@@ -80,6 +80,12 @@ class MockMokonePlatform
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> handleBannerClick(Map<String, dynamic>? params) {
+    // TODO: implement handleBannerClick
+    throw UnimplementedError();
+  }
+
 
 }
 

@@ -83,4 +83,10 @@ class MethodChannelMokone extends MokonePlatform {
     final result = await methodChannel.invokeMethod<String>('getCarouselData');
     return result;
   }
+
+    @override
+  Future<void> handleBannerClick(Map<String, dynamic>? params)  async {
+     await methodChannel.invokeMethod<void>('handleBannerClick');
+  }
+
 }

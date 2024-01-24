@@ -63,6 +63,7 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "logoutUser" -> requestLogoutUser()
             "getIAMFromServerAndShow" -> requestIAMFromServerAndShow()
             "getCarouselData" -> requestCarouselData(result)
+            "handleBannerClick" -> handleBannerClick(call)
 
             else -> result.notImplemented()
         }
@@ -170,6 +171,10 @@ class MokonePlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         MokSDK.requestCarouselContent {
             result.success(it.toString())
         }
+    }
+    private fun handleBannerClick( call: MethodCall){
+        val params = call.argument<HashMap<String, Any>?>("params")
+        MokLogger.log(MokLogger.LogLevel.ERROR, "Handle Banner Click")
     }
 
 

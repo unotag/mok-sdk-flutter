@@ -83,4 +83,8 @@ abstract class MokonePlatform extends PlatformInterface {
   Future<String?> requestCarouselData() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<void> handleBannerClick(Map<String, dynamic>? params) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
 }
