@@ -31,7 +31,8 @@ class _MokCarouselBannerState extends State<MokCarouselBanner> {
             return Container();
           case ConnectionState.done:
             if (snapshot.hasError) return Container();
-            return CarouselSlider(
+            if (snapshot.hasData) {
+              return CarouselSlider(
               options: CarouselOptions(height: 250.0, viewportFraction: 1),
               items: snapshot.data?.data?.map((data) {
                 return Builder(
@@ -46,6 +47,9 @@ class _MokCarouselBannerState extends State<MokCarouselBanner> {
                 );
               }).toList(),
             );
+            }else{
+              return Container();
+            }
         }
       },
     );
@@ -118,30 +122,6 @@ class _MokCarouselBannerState extends State<MokCarouselBanner> {
 //   }
 // }
 
-class BannerShimmer extends StatelessWidget {
-  final double height;
-
-  const BannerShimmer({Key? key, required this.height}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: height - 28,
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey.shade400,
-        highlightColor: Colors.grey.shade100,
-        child: Card(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: SizedBox(
-            height: height - 28,
-            width: MediaQuery.of(context).size.width,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 Future<CarouselData?> fetchData() async {
   try {
