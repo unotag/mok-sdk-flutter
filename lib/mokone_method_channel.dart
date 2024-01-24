@@ -12,8 +12,8 @@ class MethodChannelMokone extends MokonePlatform {
   final methodChannel = const MethodChannel('mokone');
 
   @override
-  Future<void> initMokSdk(bool isProdEnv, int duration) async {
-    var arguments = {'isProdEnv': isProdEnv, 'duration' : duration};
+  Future<void> initMokSdk(bool isProdEnv, int duration, int maxDisplayedIAMs) async {
+    var arguments = {'isProdEnv': isProdEnv, 'duration' : duration, 'maxDisplayedIAMs' : maxDisplayedIAMs};
     await methodChannel.invokeMethod<String>('initMokSdk',arguments);
   }
 
@@ -75,6 +75,12 @@ class MethodChannelMokone extends MokonePlatform {
   Future<String?> requestLogEvent(String userId, String eventName, Map<String, dynamic>? params) async {
     var arguments = {'userId': userId, 'eventName': eventName, 'params': params};
     final result = await methodChannel.invokeMethod<String>('logEvent', arguments);
+    return result;
+  }
+
+  @override
+  Future<String?> requestCarouselData() async {
+    final result = await methodChannel.invokeMethod<String>('getCarouselData');
     return result;
   }
 }

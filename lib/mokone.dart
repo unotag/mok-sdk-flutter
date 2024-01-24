@@ -4,8 +4,8 @@ import 'mokone_platform_interface.dart';
 
 class Mokone {
 
-  Future<void> initMokSdk(bool isProdEnv, int duration) async {
-    return await MokonePlatform.instance.initMokSdk(isProdEnv, duration);
+  Future<void> initMokSdk(bool isProdEnv, int duration, int maxDisplayedIAMs) async {
+    return await MokonePlatform.instance.initMokSdk(isProdEnv, duration, maxDisplayedIAMs);
   }
 
  Future<void> enableProductionEnvironment(bool isProdEnv) async {
@@ -52,5 +52,9 @@ class Mokone {
       Map<String, dynamic>? params}) async {
     return await MokonePlatform.instance
         .requestLogEvent(userId, eventName, params);
+  }
+
+  Future<String?> getCarouselData() async {
+    return await MokonePlatform.instance.requestCarouselData();
   }
 }

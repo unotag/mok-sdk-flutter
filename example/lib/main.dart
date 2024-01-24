@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:mokone/carousel_banner/carousel_banner.dart';
 import 'package:mokone/mokone.dart';
 
 void main() {
@@ -37,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   initMokSdk() async {
-    await _mokonePlugin.initMokSdk(false, 6000);
+    await _mokonePlugin.initMokSdk(true, 6000, 5);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -82,6 +83,7 @@ class _MyAppState extends State<MyApp> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              MokCarouselBanner(),
               _updateUserId(),
               _logEvent(),
               _fcmToken(""),

@@ -1,3 +1,7 @@
+## 0.0.19
+
+* Android : dependencies updated, v30
+
 ## 0.0.18
 
 * feat: ActivityLifecycleCallbacks added

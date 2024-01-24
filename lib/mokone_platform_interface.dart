@@ -25,7 +25,7 @@ abstract class MokonePlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> initMokSdk(bool isProdEnv, int duration) {
+  Future<void> initMokSdk(bool isProdEnv, int duration, int maxDisplayedIAMs) {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
@@ -76,6 +76,11 @@ abstract class MokonePlatform extends PlatformInterface {
   //log event
   Future<String?> requestLogEvent(
       String userId, String eventName, Map<String, dynamic>? params) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  //carousel data
+  Future<String?> requestCarouselData() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }
