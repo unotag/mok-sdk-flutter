@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   initMokSdk() async {
-    await _mokonePlugin.initMokSdk(true, 6000, 5);
+    await _mokonePlugin.initMokSdk(false, 6000, 5);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
