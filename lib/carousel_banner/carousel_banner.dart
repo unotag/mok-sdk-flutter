@@ -7,7 +7,18 @@ import 'package:mokone/carousel_banner/carousel_banner_data.dart';
 import 'package:mokone/mokone.dart';
 
 class MokCarouselBanner extends StatefulWidget {
-  const MokCarouselBanner({super.key});
+  final double? height;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+  final BoxFit? scaleType;
+
+  MokCarouselBanner({
+    super.key,
+    this.height = 250.0,
+    this.padding = const EdgeInsets.all(0),
+    this.margin = const EdgeInsets.all(0),
+    this.scaleType = BoxFit.fill,
+  });
 
   @override
   State<MokCarouselBanner> createState() => _MokCarouselBannerState();
@@ -33,26 +44,33 @@ class _MokCarouselBannerState extends State<MokCarouselBanner> {
             if (snapshot.hasError) return Container();
             if (snapshot.hasData) {
               return CarouselSlider(
-                options: CarouselOptions(height: 250.0, viewportFraction: 1),
+                options: CarouselOptions(height: widget.height, viewportFraction: 1),
                 items: snapshot.data?.data?.map((data) {
                   return Builder(
                     builder: (BuildContext context) {
                       return InkWell(
                           onTap: () async {
-                            if (data.carouselContent?[0].cta !=null) {
-                            await mokonePlugin.handleBannerClick(data.carouselContent?[0].cta ?? "");
+                            if (data.carouselContent?[0].cta != null) {
+                              await mokonePlugin.handleBannerClick(data.carouselContent?[0].cta ?? "");
                             }
                           },
-                          child: CachedNetworkImage(
-                            width: MediaQuery.of(context).size.width,
-                            cacheManager: null,
-                            imageUrl: data.carouselContent?[0].url ?? "",
-                            errorWidget: (context, url, error) => Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade400,
-                                ),
-                                child: Icon(Icons.error,color: Colors.grey.shade500,)),
-                            fit: BoxFit.cover,
+                          child: Container(
+                            padding: widget.padding,
+                            margin: widget.margin,
+                            child: CachedNetworkImage(
+                              width: MediaQuery.of(context).size.width,
+                              cacheManager: null,
+                              imageUrl: data.carouselContent?[0].url ?? "",
+                              errorWidget: (context, url, error) => Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade400,
+                                  ),
+                                  child: Icon(
+                                    Icons.error,
+                                    color: Colors.grey.shade500,
+                                  )),
+                              fit: widget.scaleType,
+                            ),
                           ));
                     },
                   );
@@ -76,6 +94,7 @@ Future<CarouselData?> fetchData() async {
     }
     return null;
   } catch (error) {
+    debugPrint("fetch carousel data error: $error");
     rethrow;
   }
 }

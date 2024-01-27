@@ -77,13 +77,15 @@ class CarouselContent {
     this.cta,
   });
 
-  factory CarouselContent.fromJson(Map<String, dynamic> json) => CarouselContent(
-    id: json["id"],
-    type: json["type"],
-    url: json["url"],
-    cta: json["cta"],
-  );
+  factory CarouselContent.fromJson(Map<String, dynamic> json) {
 
+    return CarouselContent(
+      id: json["id"] is! int ? 0: json["id"],
+      type: json["type"],
+      url: json["url"],
+      cta: json["cta"],
+    );
+  }
   Map<String, dynamic> toJson() => {
     "id": id,
     "type": type,

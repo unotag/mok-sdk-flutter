@@ -83,7 +83,7 @@ class _MyAppState extends State<MyApp> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              MokCarouselBanner(),
+              MokCarouselBanner(padding: EdgeInsets.all(16), ),
               _updateUserId(),
               _logEvent(),
               _fcmToken(""),

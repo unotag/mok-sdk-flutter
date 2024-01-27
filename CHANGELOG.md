@@ -1,4 +1,12 @@
-## 0.0.19
+## 0.0.22
+
+* fix: black IAM view
+* 
+* ## 0.0.21
+
+* dynamic values for carousel
+
+* ## 0.0.20
 
 * feat: carousel banner
 

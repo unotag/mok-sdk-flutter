@@ -53,7 +53,7 @@ android {
 
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
-        api 'com.unotags:mok-sdk-android:0.0.21'
+        api 'com.unotags:mok-sdk-android:0.0.34'
     }
 
     testOptions {
@@ -70,5 +70,5 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-common-ktx:20.3.3'
+    implementation 'com.google.firebase:firebase-common-ktx:20.4.2'
 }
