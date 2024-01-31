@@ -1,5 +1,8 @@
 ## 0.0.22
 
+* * Android : dependencies updated, v34
+## 0.0.22
+
 * fix: black IAM view
 * 
 * ## 0.0.21
