@@ -1,4 +1,8 @@
-## 0.0.22
+## 0.0.24
+
+* * Android : dependencies updated, v35
+
+## 0.0.23
 
 * * Android : dependencies updated, v34
 ## 0.0.22
