@@ -22,8 +22,8 @@ class Mokone {
     return await MokonePlatform.instance.requestUserId();
   }
 
-  Future<void> requestLogoutUser() async {
-    await MokonePlatform.instance.requestLogoutUser();
+  Future<bool?> requestLogoutUser() async {
+   return await MokonePlatform.instance.requestLogoutUser();
   }
 
   Future<String?> requestFcmToken() async {

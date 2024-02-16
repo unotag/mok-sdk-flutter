@@ -44,7 +44,7 @@ abstract class MokonePlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<void> requestLogoutUser() {
+  Future<bool?> requestLogoutUser() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 

@@ -40,8 +40,8 @@ class MethodChannelMokone extends MokonePlatform {
   }
 
   @override
-  Future<void> requestLogoutUser() async {
-    await methodChannel.invokeMethod<void>('logoutUser');
+  Future<bool?> requestLogoutUser() async {
+   return await methodChannel.invokeMethod<bool>('logoutUser');
   }
 
   @override
